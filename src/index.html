@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>My webpack config</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row noMargin todocontainer" style="margin: 10vh;">
+        <div class="col-sm-3" id="todoColumn" style="height: 75vh;">
+          To do
+          <button
+            type="button"
+            id="addnotes"
+            style="position: relative; left: 25vh;"
+          >
+            add notes
+          </button>
+          <div
+            id="taskName"
+            class="col-sm-12"
+            style="background-color: aliceblue; height: 100%;"
+          >
+        
+          <input type="text" placeholder="wats today" draggable="true" id="source"/>
+        
+        
+        </div>
+        
+        
+        
+        </div>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3" id="inProgresscolumn" style="height: 75vh;">
+          In progress
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3" id="completedcolumn" style="height: 75vh;">
+          completed
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="./index.js"></script>
+  </body>
+</html>
