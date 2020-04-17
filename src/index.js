@@ -1,107 +1,91 @@
 import lodash from "lodash";
 
 
-var addTodo = []
-var inPrgogress = []
-var completed = []
-
-
-
-
-// var source = document.getElementById('source')
-// source.addEventListener('dragstart', dragStart(event))
-
-
-
-// function dragStart(ev) {
-//     console.log("dragStart");
-//     // Change the source element's background color to signify drag has started
-//     ev.currentTarget.style.border = "dashed";
-//     // Set the drag's format and data. Use the event target's id for the data 
-//     ev.dataTransfer.setData("text/plain", ev.target.id);
-
-// }
-
-// var target = document.getElementById('inProgresscolumn')
-// target.addEventListener('drop', dropHandler(event))
-// target.addEventListener('dragover', dragoverHandler(event))
-
-
-// function dropHandler(ev) {
-//     console.log("Drop");
-//     ev.preventDefault();
-//     // Get the data, which is the id of the drop target
-//     var data = ev.dataTransfer.getData("text");
-//     ev.target.appendChild(document.getElementById(data));
-//     // Clear the drag data cache (for all formats/types)
-//     ev.dataTransfer.clearData();
-// }
-
-// function dragoverHandler(ev) {
-//     console.log("dragOver");
-//     ev.preventDefault();
-// }
-
-
-
+var elemid = 0
 var buttonclick = document.getElementById('addnotes')
 buttonclick.addEventListener('click', openPrompt)
 
-
+//getting the task in terms of a modal thingy
 function openPrompt() {
     var openModal = prompt('add notes', 'notes')
-    if (openModal == '' || openModal == null) {
-        openPrompt()
-    }
     addTodoList(openModal)
 }
 
 
-
-
+//creating a div eelement in todo column and adding event listeners
 function addTodoList(openModal) {
+
     var inputText = document.createElement('div')
     inputText.style.backgroundColor = "aliceblue"
+    inputText.style.marginTop = "13px"
     inputText.innerHTML = openModal
     inputText.draggable = "true"
-    inputText.setAttribute('id', 'draggingele')
+    inputText.setAttribute('id', 'draggingele' + elemid)
     document.getElementById('todoColumn').appendChild(inputText)
+    elemid++
     inputText.addEventListener('dragstart', (event) => {
         ondragstart(event)
-
+    })
+    inputText.addEventListener('dragend', (event) => {
+        ondragend(event)
     })
 }
 
+//in proress column handling events
+var dropHereIpc = document.getElementById('inProgresscolumn')
+dropHereIpc.addEventListener('dragover', (event) => {
+    ondragover(event)
 
+})
+
+dropHereIpc.addEventListener('drop', (event) => {
+    ondrop(event)
+})
+
+// on complete handling events
+var dropInComplete = document.getElementById('completedcolumn')
+
+dropInComplete.addEventListener('dragover', (event) => {
+    ondragover(event)
+})
+dropInComplete.addEventListener('drop', (event) => {
+    ondrop(event)
+})
+
+
+
+//functions that handle drag and drop operations
+//on drag start
 function ondragstart(event) {
     var x = event.currentTarget
     x.style.border = "dashed"
     console.log(event.dataTransfer)
 
     var datatransfer = event.dataTransfer.setData('text/plain', event.target.id)
-    event.dataTransfer.dropEffect = "move"
-
+    var addIntoArr = event.dataTransfer.types.push(datatransfer)
+    console.log(addIntoArr)
 }
 
+//on dragend
+function ondragend(event) {
+    event.currentTarget.style.border = "none"
+    console.log('heelo')
+}
 
-var dropHere = document.getElementById('inProgresscolumn')
-dropHere.addEventListener('dragover', (event) => {
+//on dragover
+function ondragover(event) {
     event.preventDefault()
-})
+}
 
-
-dropHere.addEventListener('drop', (event) => {
+//ondrop
+function ondrop(event) {
     event.preventDefault();
-
     const id = event.dataTransfer.getData('text')
-
     const draggablelem = document.getElementById(id)
-
     const dropzone = event.currentTarget
+    event.currentTarget.style.border = "none"
     dropzone.appendChild(draggablelem)
-})
-
-
+}
 
 
 
