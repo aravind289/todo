@@ -8,66 +8,99 @@ var completed = []
 
 
 
-var source = document.getElementById('source')
-source.addEventListener('dragstart', dragStart(event))
+// var source = document.getElementById('source')
+// source.addEventListener('dragstart', dragStart(event))
 
 
-function dragStart(ev) {
-    console.log("dragStart");
-    // Change the source element's background color to signify drag has started
-    ev.currentTarget.style.border = "dashed";
-    // Set the drag's format and data. Use the event target's id for the data 
-    ev.dataTransfer.setData("text/plain", ev.target.id);
+
+// function dragStart(ev) {
+//     console.log("dragStart");
+//     // Change the source element's background color to signify drag has started
+//     ev.currentTarget.style.border = "dashed";
+//     // Set the drag's format and data. Use the event target's id for the data 
+//     ev.dataTransfer.setData("text/plain", ev.target.id);
+
+// }
+
+// var target = document.getElementById('inProgresscolumn')
+// target.addEventListener('drop', dropHandler(event))
+// target.addEventListener('dragover', dragoverHandler(event))
+
+
+// function dropHandler(ev) {
+//     console.log("Drop");
+//     ev.preventDefault();
+//     // Get the data, which is the id of the drop target
+//     var data = ev.dataTransfer.getData("text");
+//     ev.target.appendChild(document.getElementById(data));
+//     // Clear the drag data cache (for all formats/types)
+//     ev.dataTransfer.clearData();
+// }
+
+// function dragoverHandler(ev) {
+//     console.log("dragOver");
+//     ev.preventDefault();
+// }
+
+
+
+var buttonclick = document.getElementById('addnotes')
+buttonclick.addEventListener('click', openPrompt)
+
+
+function openPrompt() {
+    var openModal = prompt('add notes', 'notes')
+    if (openModal == '' || openModal == null) {
+        openPrompt()
+    }
+    addTodoList(openModal)
+}
+
+
+
+
+function addTodoList(openModal) {
+    var inputText = document.createElement('div')
+    inputText.style.backgroundColor = "aliceblue"
+    inputText.innerHTML = openModal
+    inputText.draggable = "true"
+
+    document.getElementById('todoColumn').appendChild(inputText)
+    inputText.addEventListener('dragstart', (event) => {
+        ondragstart(event)
+
+    })
+}
+
+
+function ondragstart(event) {
+    var x = event.currentTarget
+    x.style.border = "dashed"
+    console.log(event.dataTransfer)
+
+    event.dataTransfer.setData('text', event.target.id)
+    event.dataTransfer.dropEffect = "move"
 
 }
 
-var target = document.getElementById('inProgresscolumn')
-target.addEventListener('drop', dropHandler(event))
-target.addEventListener('dragover', dragoverHandler(event))
 
-// var buttonclick = document.getElementById('addnotes')
-// buttonclick.addEventListener('click', addTodoList)
-
+var dropHere = document.getElementById('inProgresscolumn')
+dropHere.addEventListener('dragover', (event) => {
+    event.preventDefault()
+})
 
 
-// function addTodoList() {
+dropHere.addEventListener('drop', (event) => {
+    event.preventDefault();
+    var dropdiv = document.createElement('div')
+    const id = event.dataTransfer.getData('text')
+    console.log(id)
+    const draggablelem = document.getElementById(id)
 
+    const dropzone = event.currentTarget
+    dropzone.appendChild(draggablelem)
+})
 
-//     var inputText = document.createElement('input')
-//     inputText.type = "text"
-//     inputText.placeholder = "What Today!!"
-//     inputText.draggable = "true"
-
-
-//     document.getElementById('taskName').appendChild(inputText)
-//     inputText.addEventListener('dragstart', (event) => {
-
-//         ondragstart(event)
-
-//     })
-// }
-
-
-// function ondragstart(event) {
-
-//     var taskName = event.dataTransfer.setData('text', event.target.id)
-//     console.log(taskName)
-
-
-// }
-
-
-// var dropHere = document.getElementById('inProgresscolumn')
-// dropHere.addEventListener('drop', (event) => {
-//     event.preventDefault();
-//     var data = event.dataTransfer.getData('text')
-
-//     event.target.appendChild(dropHere)
-
-// })
-// dropHere.addEventListener('dragover', (event) => {
-//     event.preventDefault()
-// })
 
 
 
