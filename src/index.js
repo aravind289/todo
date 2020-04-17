@@ -64,7 +64,7 @@ function addTodoList(openModal) {
     inputText.style.backgroundColor = "aliceblue"
     inputText.innerHTML = openModal
     inputText.draggable = "true"
-
+    inputText.setAttribute('id', 'draggingele')
     document.getElementById('todoColumn').appendChild(inputText)
     inputText.addEventListener('dragstart', (event) => {
         ondragstart(event)
@@ -78,7 +78,7 @@ function ondragstart(event) {
     x.style.border = "dashed"
     console.log(event.dataTransfer)
 
-    event.dataTransfer.setData('text', event.target.id)
+    var datatransfer = event.dataTransfer.setData('text/plain', event.target.id)
     event.dataTransfer.dropEffect = "move"
 
 }
@@ -92,9 +92,9 @@ dropHere.addEventListener('dragover', (event) => {
 
 dropHere.addEventListener('drop', (event) => {
     event.preventDefault();
-    var dropdiv = document.createElement('div')
+
     const id = event.dataTransfer.getData('text')
-    console.log(id)
+
     const draggablelem = document.getElementById(id)
 
     const dropzone = event.currentTarget
