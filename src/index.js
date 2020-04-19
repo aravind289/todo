@@ -39,6 +39,7 @@ function addTodoList(openModal, parentId) {
     inputText.style.marginTop = "13px"
     inputText.innerHTML = openModal
     inputText.draggable = "true"
+    inputText.contentEditable = "true"
     inputText.setAttribute('id', 'draggingele' + elemid)
 
     document.getElementById(parentId).appendChild(inputText)
@@ -47,6 +48,11 @@ function addTodoList(openModal, parentId) {
     initobj['id'] = inputText.id
     initobj['parentId'] = parentId
     initobj['taskname'] = openModal
+
+
+
+
+
 
     if (openModal != null) {
         initPos.push(initobj)
@@ -61,7 +67,11 @@ function addTodoList(openModal, parentId) {
         ondragend(event)
     })
 
+
+
 }
+
+
 
 function storeInls() {
     localStorage.setItem('taskadded', JSON.stringify(initPos))
@@ -96,16 +106,12 @@ dropInComplete.addEventListener('drop', (event) => {
 function ondragstart(event) {
     var x = event.currentTarget
     x.style.border = "dashed"
-
-
     var datatransfer = event.dataTransfer.setData('text/plain', event.target.id)
-
 }
 
 //on dragend
 function ondragend(event) {
     event.currentTarget.style.border = "none"
-
 }
 
 //on dragover
@@ -137,6 +143,48 @@ function ondrop(event) {
 }
 
 
+//search filter 
+var searchid = document.getElementById('searchtask')
+
+
+searchid.addEventListener('keyup', () => {
+    var searchValue = searchid.value.toLowerCase()
+
+    if (searchValue.length != 0) {
+        initPos.map(item => {
+            let styleEffects = document.getElementById(item.id)
+            styleEffects.style.border = "none"
+            var taskNameSearching = item.taskname
+            if (taskNameSearching.indexOf(searchValue) !== -1) {
+                var taskid = item.id
+                console.log(taskid)
+                styleEffects.style.border = "dashed"
+            }
+
+        })
+    }
+    else {
+        initPos.map(item => {
+            var modifyStyle = document.getElementById(item.id)
+            modifyStyle.style.border = "none"
+        })
+
+    }
+
+}
+)
+
+document.addEventListener('click', (event) => {
+    var wholeDoc = document.getElementById('wholedoc')
+    var eventtarget = event.target
+    if (eventtarget == wholeDoc) {
+        initPos.map(item => {
+            var modifyStyle = document.getElementById(item.id)
+            modifyStyle.style.border = "none"
+        })
+    }
+
+})
 
 
 
