@@ -4,7 +4,7 @@
   "description": "to do list in vanilla js",
   "main": "webpack.config.js",
   "scripts": {
-    "build": " webpack webpack.config.js "
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
